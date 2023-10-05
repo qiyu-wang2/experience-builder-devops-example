@@ -1,1 +1,1 @@
-define({_widgetLabel:"Vrstvy mapy",goto:"Zvětšit na",information:"Detaily",increaseOpacity:"Zvýšit krytí",decreaseOpacity:"Snížit krytí",showLabels:"Zobrazit popisky",hideLabels:"Skrýt popisky"});
+System.register([],(function(e){return{execute:function(){e({_widgetLabel:"Vrstvy mapy",goto:"Zvětšit na",information:"Detaily",increaseOpacity:"Zvýšit krytí",decreaseOpacity:"Snížit krytí",increaseTransparency:"Zvýšit průhlednost",decreaseTransparency:"Snížit průhlednost",showLabels:"Zobrazit popisky",hideLabels:"Skrýt popisky"})}}}));

@@ -1,6 +1,7 @@
 export default {
   sourceLabel: 'Source',
   sourceDescript: 'A web map or web scene, or any combination of the two.',
+  selectThirdMapHint: 'Please unselect a map or scene before you choose another one. Up to two are supported.',
   initialMap: 'Initial map',
   initialMapView: 'Initial view',
   selectMap: 'Select map',
@@ -46,7 +47,7 @@ export default {
   mapAction_Point: 'Point',
   mapAction_Polyline: 'Polyline',
   mapAction_Polygon: 'Polygon',
-  mapAction_UseLayerDefinedSymbols: 'Use layer defined symbols',
+  mapAction_UseLayerDefinedSymbols: 'Use layer-defined symbols',
   mapAction_UseCustomSymbols: 'Use custom symbols',
   mapZoomToAction_ZoomScale: 'Zoom scale',
   mapZoomToAction_Automatic: 'Automatic',

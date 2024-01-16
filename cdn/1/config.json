@@ -146,41 +146,6 @@
       },
       "label": "Controller layout"
     },
-    "layout_5": {
-      "content": {
-        "0": {
-          "type": "WIDGET",
-          "widgetId": "widget_14",
-          "bbox": {
-            "left": 0,
-            "top": 0,
-            "bottom": 0,
-            "right": 0
-          }
-        }
-      },
-      "order": [
-        "0"
-      ],
-      "label": "Open widget layout"
-    },
-    "layout_6": {
-      "content": {
-        "0": {
-          "type": "WIDGET",
-          "bbox": {
-            "left": 0,
-            "top": 0,
-            "bottom": 0,
-            "right": 0
-          }
-        }
-      },
-      "order": [
-        "0"
-      ],
-      "label": "Open widget layout"
-    },
     "layout_7": {
       "type": "FIXED",
       "order": [
@@ -512,24 +477,6 @@
       ],
       "label": "Controller layout"
     },
-    "layout_24": {
-      "content": {
-        "0": {
-          "type": "WIDGET",
-          "widgetId": "widget_14",
-          "bbox": {
-            "left": 0,
-            "top": 0,
-            "bottom": 0,
-            "right": 0
-          }
-        }
-      },
-      "order": [
-        "0"
-      ],
-      "label": "Open widget layout"
-    },
     "layout_25": {
       "type": "FIXED",
       "content": {},
@@ -609,14 +556,14 @@
           "LARGE": "layout_2"
         }
       },
-      "version": "1.10.0",
+      "version": "1.13.0",
       "label": "Fixed Panel 1"
     },
     "widget_3": {
       "id": "widget_3",
       "uri": "widgets/common/text/",
       "config": {
-        "text": "<p><span style=\"color: var(--light); font-size: 24px;\">Experience Builder Demo</span></p>",
+        "text": "<p><span style=\"font-size: 24px; color: var(--light);\">Shawn's App!</span></p>",
         "style": {
           "verticalAlign": "center",
           "wrap": true,
@@ -624,7 +571,7 @@
           "padding": "p-1"
         }
       },
-      "version": "1.10.0",
+      "version": "1.13.0",
       "label": "Text 1"
     },
     "widget_5": {
@@ -657,18 +604,13 @@
           "LARGE": "layout_3",
           "SMALL": "layout_4",
           "MEDIUM": "layout_23"
-        },
-        "_openwidget": {
-          "LARGE": "layout_5",
-          "SMALL": "layout_6",
-          "MEDIUM": "layout_24"
         }
       },
       "widgets": [
         "widget_14",
         "widget_15"
       ],
-      "version": "1.10.0",
+      "version": "1.13.0",
       "label": "Widget Controller 1"
     },
     "widget_6": {
@@ -733,7 +675,7 @@
           "LARGE": "layout_14"
         }
       },
-      "version": "1.10.0",
+      "version": "1.13.0",
       "label": "Sidebar 1"
     },
     "widget_10": {
@@ -794,8 +736,9 @@
           "MEDIUM": "layout_30"
         }
       },
-      "version": "1.10.0",
-      "label": "Map 1"
+      "version": "1.13.0",
+      "label": "Map 1",
+      "enableDataAction": false
     },
     "widget_12": {
       "id": "widget_12",
@@ -911,7 +854,8 @@
         "widget_11"
       ],
       "version": "1.5.0",
-      "label": "Map Layers 1"
+      "label": "Map Layers 1",
+      "enableDataAction": false
     },
     "widget_15": {
       "id": "widget_15",
@@ -1040,7 +984,7 @@
       ]
     }
   },
-  "exbVersion": "1.10.0",
+  "exbVersion": "1.13.0",
   "mainSizeMode": "LARGE",
   "theme": "themes/default/",
   "forBuilderAttributes": {
@@ -1057,7 +1001,7 @@
       "home": []
     }
   ],
-  "timestamp": 1643069624185,
+  "timestamp": 1705435120431,
   "attributes": {
     "portalUrl": "https://prof-services.maps.arcgis.com",
     "isWebTier": false,
@@ -1077,5 +1021,6 @@
       "small": null,
       "link": null
     }
-  }
+  },
+  "originExbVersion": "1.13.0"
 }

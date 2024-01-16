@@ -69,11 +69,12 @@
         "1": {
           "type": "WIDGET",
           "bbox": {
-            "left": "20.00px",
+            "left": "20px",
             "top": "50%",
             "width": "291px",
-            "height": "42px",
-            "bottom": "0px"
+            "height": "40px",
+            "bottom": "11px",
+            "right": "75.7%"
           },
           "widgetId": "widget_3",
           "setting": {
@@ -81,7 +82,9 @@
             "hCenter": false,
             "autoProps": {
               "top": false,
-              "bottom": true
+              "bottom": true,
+              "left": false,
+              "right": true
             }
           }
         },
@@ -563,7 +566,7 @@
       "id": "widget_3",
       "uri": "widgets/common/text/",
       "config": {
-        "text": "<p><span style=\"font-size: 24px; color: var(--light);\">Shawn's App!</span></p>",
+        "text": "<p><span style=\"color: var(--light); font-size: 24px;\">Experience Builder Demo</span></p>",
         "style": {
           "verticalAlign": "center",
           "wrap": true,
@@ -1001,7 +1004,7 @@
       "home": []
     }
   ],
-  "timestamp": 1705435120431,
+  "timestamp": 1705438165551,
   "attributes": {
     "portalUrl": "https://prof-services.maps.arcgis.com"
   },

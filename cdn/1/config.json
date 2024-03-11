@@ -146,56 +146,22 @@
       },
       "label": "Controller layout"
     },
-    "layout_5": {
-      "content": {
-        "0": {
-          "type": "WIDGET",
-          "widgetId": "widget_14",
-          "bbox": {
-            "left": 0,
-            "top": 0,
-            "bottom": 0,
-            "right": 0
-          }
-        }
-      },
-      "order": [
-        "0"
-      ],
-      "label": "Open widget layout"
-    },
-    "layout_6": {
-      "content": {
-        "0": {
-          "type": "WIDGET",
-          "bbox": {
-            "left": 0,
-            "top": 0,
-            "bottom": 0,
-            "right": 0
-          }
-        }
-      },
-      "order": [
-        "0"
-      ],
-      "label": "Open widget layout"
-    },
     "layout_7": {
       "type": "FIXED",
       "order": [
-        "0"
+        "0",
+        "1"
       ],
       "content": {
         "0": {
           "type": "WIDGET",
           "bbox": {
-            "left": 0,
-            "top": 0,
-            "width": "298px",
-            "height": "350px",
-            "right": 0,
-            "bottom": 0
+            "left": "0px",
+            "top": "0px",
+            "width": "398px",
+            "height": "50.00%",
+            "right": "0px",
+            "bottom": "503px"
           },
           "widgetId": "widget_18",
           "setting": {
@@ -205,8 +171,30 @@
               "width": "STRETCH",
               "top": false,
               "bottom": false,
-              "height": "STRETCH"
+              "height": "CUSTOM"
             }
+          }
+        },
+        "1": {
+          "type": "WIDGET",
+          "widgetId": "widget_19",
+          "bbox": {
+            "left": "0.0%",
+            "right": "0.0%",
+            "top": "40.8%",
+            "bottom": "0.00%",
+            "width": "100.0%",
+            "height": "50.0%"
+          },
+          "setting": {
+            "autoProps": {
+              "right": false,
+              "left": true,
+              "top": true,
+              "bottom": false
+            },
+            "vCenter": false,
+            "hCenter": false
           }
         }
       },
@@ -512,24 +500,6 @@
       ],
       "label": "Controller layout"
     },
-    "layout_24": {
-      "content": {
-        "0": {
-          "type": "WIDGET",
-          "widgetId": "widget_14",
-          "bbox": {
-            "left": 0,
-            "top": 0,
-            "bottom": 0,
-            "right": 0
-          }
-        }
-      },
-      "order": [
-        "0"
-      ],
-      "label": "Open widget layout"
-    },
     "layout_25": {
       "type": "FIXED",
       "content": {},
@@ -609,14 +579,14 @@
           "LARGE": "layout_2"
         }
       },
-      "version": "1.10.0",
+      "version": "1.13.0",
       "label": "Fixed Panel 1"
     },
     "widget_3": {
       "id": "widget_3",
       "uri": "widgets/common/text/",
       "config": {
-        "text": "<p><span style=\"color: var(--light); font-size: 24px;\">Experience Builder Demo</span></p>",
+        "text": "<p><span style=\"color: var(--light); font-size: 24px;\">Demo App!</span></p>",
         "style": {
           "verticalAlign": "center",
           "wrap": true,
@@ -624,7 +594,7 @@
           "padding": "p-1"
         }
       },
-      "version": "1.10.0",
+      "version": "1.13.0",
       "label": "Text 1"
     },
     "widget_5": {
@@ -657,18 +627,13 @@
           "LARGE": "layout_3",
           "SMALL": "layout_4",
           "MEDIUM": "layout_23"
-        },
-        "_openwidget": {
-          "LARGE": "layout_5",
-          "SMALL": "layout_6",
-          "MEDIUM": "layout_24"
         }
       },
       "widgets": [
         "widget_14",
         "widget_15"
       ],
-      "version": "1.10.0",
+      "version": "1.13.0",
       "label": "Widget Controller 1"
     },
     "widget_6": {
@@ -733,7 +698,7 @@
           "LARGE": "layout_14"
         }
       },
-      "version": "1.10.0",
+      "version": "1.13.0",
       "label": "Sidebar 1"
     },
     "widget_10": {
@@ -794,8 +759,9 @@
           "MEDIUM": "layout_30"
         }
       },
-      "version": "1.10.0",
-      "label": "Map 1"
+      "version": "1.13.0",
+      "label": "Map 1",
+      "enableDataAction": false
     },
     "widget_12": {
       "id": "widget_12",
@@ -911,7 +877,8 @@
         "widget_11"
       ],
       "version": "1.5.0",
-      "label": "Map Layers 1"
+      "label": "Map Layers 1",
+      "enableDataAction": false
     },
     "widget_15": {
       "id": "widget_15",
@@ -1029,7 +996,7 @@
     },
     "widget_18": {
       "uri": "widgets/add-layers/",
-      "version": "1.10.0",
+      "version": "1.13.0",
       "label": "add-layers 1",
       "config": {
         "zoomToLayer": true
@@ -1038,9 +1005,22 @@
       "useMapWidgetIds": [
         "widget_11"
       ]
+    },
+    "widget_19": {
+      "uri": "widgets/get-map-coordinates/",
+      "version": "1.13.0",
+      "label": "Get Map Coordinates (Class)",
+      "config": {
+        "showScale": true,
+        "showZoom": true
+      },
+      "id": "widget_19",
+      "useMapWidgetIds": [
+        "widget_11"
+      ]
     }
   },
-  "exbVersion": "1.10.0",
+  "exbVersion": "1.13.0",
   "mainSizeMode": "LARGE",
   "theme": "themes/default/",
   "forBuilderAttributes": {
@@ -1057,12 +1037,12 @@
       "home": []
     }
   ],
-  "timestamp": 1643069624185,
+  "timestamp": 1710197638787,
   "attributes": {
     "portalUrl": "https://prof-services.maps.arcgis.com",
     "isWebTier": false,
     "clientId": "",
-    "title": "Add Layers",
+    "title": "Experience Builder Devops Example",
     "description": "",
     "type": "Web Experience",
     "thumbnail": null
@@ -1077,5 +1057,6 @@
       "small": null,
       "link": null
     }
-  }
+  },
+  "originExbVersion": "1.13.0"
 }

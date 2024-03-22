@@ -7804,37 +7804,6 @@
     "group": 7
   },
   {
-    "name": "get-map-coordinates",
-    "manifest": {
-      "name": "get-map-coordinates",
-      "label": "Get Map Coordinates",
-      "type": "widget",
-      "version": "1.13.0",
-      "exbVersion": "1.13.0",
-      "author": "2024 Esri Federal GIS Conference | Esri Professional Services",
-      "dependency": [
-        "jimu-arcgis"
-      ],
-      "description": "Get map coordinates demo widget.",
-      "copyright": "",
-      "license": "http://www.apache.org/licenses/LICENSE-2.0",
-      "properties": {},
-      "translatedLocales": [
-        "en"
-      ],
-      "defaultSize": {
-        "width": 800,
-        "height": 500
-      }
-    },
-    "i18nLabel": {},
-    "i18nDescription": {},
-    "uri": "widgets/get-map-coordinates/",
-    "icon": "widgets/get-map-coordinates/icon.svg",
-    "order": 700,
-    "group": 7
-  },
-  {
     "name": "simple",
     "manifest": {
       "name": "simple",

@@ -6,7 +6,7 @@
   </head>
   <body>
     <script src="./request.umd.min.js"></script>
-    <script src="./auth.umd.min.js"></script>
+    <!-- <script src="./auth.umd.min.js"></script> -->
     <script src="./js.cookie.js"></script>
     <script>
       function processAuthentication() {
@@ -15,25 +15,22 @@
         window.onbeforeunload = () => {
           console.log('onbeforeunload');
         }
-        if(hash.error){
-          if (hash.error !== 'access_denied') {
-            // alert error message except for clicking cancel
-            alert(hash.error_description || hash.error);
-          }
-          const {portal, clientId, fromUrl, isDevEdition, mountPath} = query;
-          const redirectUri = `${window.location.origin}${window.location.pathname}?clientId=${clientId}&portal=${portal}&popup=${popup}&fromUrl=${fromUrl}`
+        // since 2024.R3, online rest-api uses query error to instead of hash error
+        if(hash.error || query.error) {
+          const {portal, clientId, isDevEdition, mountPath} = query;
           if(popup) {
             // SessionManager.signIn listens for popup window closing.
-            window.close();
-            return;
+            completeOAuth2(query, popup)
           } else {
+            // sign-in canceled error is 'access_denied'
+            const errorCode = hash.messageCode || hash.error || query.messageCode || query.error
             if (isDevEdition === 'true') {
-              // Redirect to set-portalUrl page
+              // Redirect to set-portalUrl page with 'oauth error code'
               const mountPathFinal = mountPath ? mountPath : '/'
-              window.location.href = `${location.protocol}//${location.host}${mountPathFinal}page/set-portalurl`;
+              window.location.href = `${location.protocol}//${location.host}${mountPathFinal}page/set-portalurl?oauth_error_code=${errorCode}&fromUrl=${encodeURIComponent(query.fromUrl)}`;
             } else {
-              // Redirect to landing page
-              window.location.href = `${location.protocol}//${location.host}/page/landing`;
+              // Redirect to landing page with 'oauth error code'
+              window.location.href = `${location.protocol}//${location.host}/page/landing?oauth_error_code=${errorCode}&fromUrl=${encodeURIComponent(query.fromUrl)}`;
             }
           }
         }
@@ -49,7 +46,7 @@
           openerHref = '';
         }
         let usePopupWindow;
-        // Normall we only need to check 'opener' to know whether use popup window for sign-in, except for one situation:
+        // Normally, we only need to check 'opener' to know whether use popup window for sign-in, except for one situation:
         //   Launch Exb from appLauncher (or create button) of online/portal.
         //   1, Normal popup sign-in:
         //        'window.location.origin': 'experience_or_portal.arcgis.com'
@@ -71,38 +68,51 @@
         }
 
         if(usePopupWindow){//popup window
-          //There is a bug when popup is true of arcgis-rest-js that will occur the error:
-          //o.opener.parent[("__ESRI_REST_AUTH_HANDLER_" + z)] is not a function
-          //see https://github.com/Esri/arcgis-rest-js/issues/580
-
-          try {
-            if(window.opener && window.opener.parent && !window.opener.parent[`__ESRI_REST_AUTH_HANDLER_${query.clientId}`]){
-              window.opener.parent[`__ESRI_REST_AUTH_HANDLER_${query.clientId}`] = window.opener[`__ESRI_REST_AUTH_HANDLER_${query.clientId}`]
+          if (isInIFrame()) {
+            // REST-JS 4.x has a problem with embedded OAuth login, oauth-callback window cannot get local storage items from its opener 
+            // original reason reference:
+            // https://developers.google.com/privacy-sandbox/3pcd/storage-partitioning
+            const stateStorageKey = `ARCGIS_REST_JS_AUTH_STATE_${query.clientId}`
+            const stateId = window.opener.localStorage.getItem(stateStorageKey)
+            const stateIdInCurrentWin = window.localStorage.getItem(stateStorageKey)
+            if (stateId && !stateIdInCurrentWin) {
+              window.localStorage.setItem(stateStorageKey, stateId);
             }
-          } catch (error) {
-            // error is thrown by accessing window.opener.parent[].
-            // means it is in the IFrame
-            // bug fixes for accessing window.opener.parent[] from completeOAuth2()
-            window.opener.parent = null;
+            const codeVerifierStorageKey = `ARCGIS_REST_JS_CODE_VERIFIER_${query.clientId}`;
+            const codeVerifier = window.opener.localStorage.getItem(codeVerifierStorageKey)
+            const codeVerifierInCurrentWin = window.localStorage.getItem(codeVerifierStorageKey)
+            if (codeVerifier && !codeVerifierInCurrentWin) {
+              window.localStorage.setItem(codeVerifierStorageKey, codeVerifier);
+            }
           }
-          arcgisRest.UserSession.completeOAuth2({
-            portal: query.portal,
-            clientId: query.clientId,
-            popup: popup,
-          });
-          // completeOAuth2ForPopupWindow(query, hash);
-          // close();
-
-          // For popup login, we dont writeAuthInfo here, it's written in SessionManager(for main portal only)
+          completeOAuth2(query, popup)
+          // For popup login, we don't writeAuthInfo here, it's written in SessionManager(for main portal only)
         }else {
-          const session = arcgisRest.UserSession.completeOAuth2({
-            portal: query.portal,
-            clientId: query.clientId,
-            popup: popup,
+          completeOAuth2(query, popup).then(session => {
+            writeAuthInfo(session, query, hash);
+            window.location.href = query.fromUrl;
+            // window.location.href will not reload the page if there's an anchor (#) in the URL.
+            if (window.location.hash) {
+              window.location.reload()
+            }
           });
-          writeAuthInfo(session, query, hash);
-          window.location.href = query.fromUrl;
         }
+      }
+
+      function isInIFrame () {
+        const openerWin = window.opener
+        return openerWin && openerWin.self !== openerWin.top && !openerWin.jimuConfig.isInBuilder
+      }
+
+      function completeOAuth2(query, popup) {
+        var redirectUri = `${query.redirectUri}&redirectUri=${encodeURIComponent(query.redirectUri)}`;
+        return arcgisRest.ArcGISIdentityManager.completeOAuth2({
+          portal: query.portal,
+          clientId: query.clientId,
+          redirectUri: redirectUri,
+          pkce: query.enablePkce === 'true',
+          popup: popup,
+        })
       }
 
       function getQueryAndHashObject(){
@@ -111,21 +121,11 @@
         if (query.indexOf('?') > -1) {
           query = query.substr(1);
         }
-        //Appoint fromUrl is located in the last of the query
-        const fromUrlIndex = query.indexOf('fromUrl');
-        if(fromUrlIndex > -1){
-          const fromUrlQuery = query.substr(fromUrlIndex);
-          const equalIndex = fromUrlQuery.indexOf('=');
-          queryObject[fromUrlQuery.substring(0, equalIndex)] = fromUrlQuery.substr(equalIndex + 1);
-
-          query = query.substring(0, fromUrlIndex - 1);
-        }
         if(!!query){
           var pairs = query.split('&');
           for(var i = 0; i < pairs.length; i++){
-            var splits = decodeURIComponent(pairs[i]).split('=');
-            var v = splits[1];
-            queryObject[splits[0]] = splits[1];
+            var splits = pairs[i].split('=');
+            queryObject[splits[0]] = decodeURIComponent(splits[1]);
           }
         }
         queryObject.clientId = queryObject.clientId || queryObject.clientID
@@ -198,21 +198,6 @@
         }
       }
 
-      function _isArcgisUrl(url, isHostname){
-        if(!url)return false;
-        let hostname = url;
-        if(!isHostname){
-          hostname = _getHostname(url);
-          if(!hostname)return false;
-        }
-        hostname = hostname.toLowerCase();
-        return (hostname.indexOf('.arcgis.com') > -1 || hostname === 'arcgis.com');
-      }
-
-      function _canWriteCookie(clientId){
-        return !_isArcgisUrl(window.location.hostname, true) || clientId !== 'experienceBuilder'
-      }
-
       function writeAuthInfo(session, query, hash) {
         // write Auth info to local storage.
         const {urlKey, customBaseUrl, schema} = _getPortalUrlInfo(session.portal);
@@ -221,8 +206,12 @@
           email: session.username,
           token: session.token,
           expires: session.tokenExpires,
+          refreshToken: session.refreshToken,
+          refreshTokenExpires: session.refreshTokenExpires,
+          redirectUri: session.redirectUri,
           urlKey: urlKey,
           customBaseUrl: customBaseUrl,
+          clientId: session.clientId,
           schema: schema
         }
         try{

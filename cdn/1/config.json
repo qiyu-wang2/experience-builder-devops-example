@@ -616,7 +616,7 @@
       "id": "widget_3",
       "uri": "widgets/common/text/",
       "config": {
-        "text": "<p><span style=\"color: var(--light); font-size: 24px;\">Experience Builder!!!!!!!!</span></p>",
+        "text": "<p><span style=\"color: var(--light); font-size: 24px;\">Experience Builder DevOps Example</span></p>",
         "style": {
           "verticalAlign": "center",
           "wrap": true,
@@ -1062,6 +1062,7 @@
     "portalUrl": "https://prof-services.maps.arcgis.com",
     "isWebTier": false,
     "clientId": "",
+    "express": false,
     "title": "Add Layers",
     "description": "",
     "type": "Web Experience",

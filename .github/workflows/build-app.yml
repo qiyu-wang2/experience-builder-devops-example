@@ -9,7 +9,7 @@ jobs:
   Build-and-Deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code qiyu
+      - name: Check out repository code qiyu test
         uses: actions/checkout@v3
       - name: Download Experience Builder
         # WARNING: 
